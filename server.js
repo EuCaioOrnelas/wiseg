@@ -25,7 +25,7 @@ io.on("connection", function (socket) {
   })
 })
 
-http.listen(8080, function(){
+http.listen(80, function(){
   console.log('listening on port 8080')
 })
 
