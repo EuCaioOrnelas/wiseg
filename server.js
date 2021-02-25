@@ -6,6 +6,8 @@ var cors = require('cors')
 const app = express()
 app.use(cors())
 
+app.get('/', (req, res) => res.send({statusServer: 'On'}))
+
 const http = require('http').Server(app)
 
 const io = require('socket.io')(http, {
