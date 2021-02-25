@@ -31,6 +31,7 @@ http.listen(process.env.PORT || 8080, function(){
 
 
 const date = moment().subtract(1, 'days').format()
+console.log(date)
 
 const cias = [{
   cia: 'Alfa',
@@ -100,9 +101,6 @@ const cias = [{
 async function consult(cpf, placa, cia) {
   return new Promise(async (resolve) => {
     const { data } = await axios.get(`https://oag.autoglass.com.br/atendimentos/api/web-app/apolices?CpfCnpj=${cpf}&DataSinistro=${date}&Placa=${placa}&Seguradora=${cia.slug}`)
-
-    console.log(data, cpf, placa, cia)
-    console.log(`https://oag.autoglass.com.br/atendimentos/api/web-app/apolices?CpfCnpj=${cpf}&DataSinistro=${date}&Placa=${placa}&Seguradora=${cia.slug}`)
 
     if(data.ApoliceNaoEncontrada) return resolve({ cia, error: 'not-found' })
     return resolve({ cia })
