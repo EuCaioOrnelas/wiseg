@@ -102,6 +102,7 @@ async function consult(cpf, placa, cia) {
     const { data } = await axios.get(`https://oag.autoglass.com.br/atendimentos/api/web-app/apolices?CpfCnpj=${cpf}&DataSinistro=${date}&Placa=${placa}&Seguradora=${cia.slug}`)
 
     console.log(data, cpf, placa, cia)
+    console.log(`https://oag.autoglass.com.br/atendimentos/api/web-app/apolices?CpfCnpj=${cpf}&DataSinistro=${date}&Placa=${placa}&Seguradora=${cia.slug}`)
 
     if(data.ApoliceNaoEncontrada) return resolve({ cia, error: 'not-found' })
     return resolve({ cia })
