@@ -110,6 +110,8 @@ async function consult(cpf, placa, cia) {
 async function initial(data, socket) {
   console.log("Certo, estou pesquisando, agora é só esperar ;)")
   const initialDateTime = moment()
+
+  let notFound  
   for (const cia of cias) {
     let start = moment()
     console.log('Pesquisando na', cia.cia);
@@ -122,12 +124,17 @@ async function initial(data, socket) {
       console.log(`------- Duração: ${finalDateTime.diff(initialDateTime, 'seconds')} segundos ----------------------------------`)
       break;
     }
+
+    if(cia.cia === 'Zurich') notFound = true
+    
     let end = moment()
     console.log(`------- Duração: ${end.diff(start, 'seconds')} segundos ----------------------------------`)
   }
-/*     slugs.forEach(cia => {
-      consult(cpf, placa, chassi, cia)          
-    }) */
+
+  const notfound = moment()
+  console.log(`------- Duração: ${notfound.diff(initialDateTime, 'seconds')} segundos ----------------------------------`)
+  if(notFound) socket.emit('notfound')
+
 }
 
 /* initial() */
