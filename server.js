@@ -1,8 +1,10 @@
 const moment = require('moment')
 const axios = require('axios')
-
 const express = require('express')
+var cors = require('cors')
+
 const app = express()
+app.use(cors())
 
 const http = require('http').Server(app)
 
