@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consulta de Seguro</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        text-align: center;
+      }
+      input {
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #218838;
+      }
+      .result {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        text-align: left;
+      }
+      .result h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      .result .info {
+        margin: 5px 0;
+      }
+      .error {
+        color: red;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Consulta de Seguro</h2>
+      <input type="text" id="placa" placeholder="Digite a Placa" />
+      <button onclick="consultarSeguro()">Consultar</button>
+
+      <div id="resultado" class="result"></div>
+      <div id="error" class="error"></div>
+    </div>
+
+    <script>
+      async function consultarSeguro() {
+        const placa = document.getElementById("placa").value;
+
+        // Verifica se a placa está preenchida
+        if (!placa) {
+          document.getElementById("error").textContent =
+            "Preencha o campo de placa!";
+          return;
+        }
+
+        // URL do backend local (substitua se estiver em outro servidor)
+        const url = `http://localhost:8080/consultar-seguro?placa=${placa}`;
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+
+          if (response.ok) {
+            let resultadoHTML = `<h3>Resultado:</h3>`;
+
+            // Exibe os dados de forma mais bonita e organizada
+            data.forEach((item) => {
+              resultadoHTML += `
+                <div class="info">
+                  <strong>Seguradora:</strong> ${
+                    item.seguradora || "Não encontrada"
+                  }<br />
+                  <strong>Modelo do Carro:</strong> ${
+                    item.modelo || "Não encontrado"
+                  }<br />
+                  <strong>Placa:</strong> ${
+                    item.placa || "Não encontrada"
+                  }<br />
+                  <strong>Chassi:</strong> ${
+                    item.chassi || "Não encontrado"
+                  }<br />
+                  
+                </div>
+                <hr />
+              `;
+            });
+
+            document.getElementById("resultado").innerHTML = resultadoHTML;
+            document.getElementById("error").textContent = "";
+          } else {
+            document.getElementById("resultado").innerHTML = "";
+            document.getElementById("error").textContent =
+              "Esse carro não tem seguro...";
+          }
+        } catch (error) {
+          document.getElementById("resultado").innerHTML = "";
+          document.getElementById("error").textContent =
+            "Erro ao conectar com a API.";
+        }
+      }
+    </script>
+  </body>
+</html>

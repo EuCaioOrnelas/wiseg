@@ -1,0 +1,147 @@
+/* Resetando margens e paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar Container */
+.navbar {
+  background-color: #11a65f; /* Cor principal (verde) */
+  padding: 10px 20px; /* Espaçamento interno */
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Container interno da navbar */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  flex-wrap: wrap; /* Permite que os itens da navbar se movam para a linha seguinte em telas pequenas */
+}
+
+/* Logo da empresa */
+.logo a {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 150px;
+}
+
+/* Estilos para os links da navbar */
+
+.nav-links-mobile {
+  display: none;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  margin-left: auto; /* Alinha os links à direita */
+}
+
+/* Estilo para cada link */
+.nav-links li .links {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Estilo para o botão "Sair" */
+.logout {
+  padding: 8px 10px;
+  color: black;
+  background-color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease; /* Adiciona uma transição suave */
+}
+
+.logout:hover {
+  background-color: white;
+  border-radius: 8px;
+}
+
+/* Conteúdo abaixo da navbar (para não sobrepor conteúdo) */
+.content {
+  margin-top: 80px; /* Para dar espaço ao conteúdo e não sobrepor a navbar */
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  font-size: 28px;
+  color: #333;
+}
+
+p {
+  font-size: 18px;
+  color: #666;
+}
+
+/* Responsividade: Ajustes para telas menores */
+@media (max-width: 800px) {
+  /* Alinhar o logo ao centro para telas menores */
+  .navbar-container {
+    justify-content: center;
+  }
+
+  .logo img {
+    width: 120px; /* Logo um pouco menor em telas menores */
+  }
+
+  /* Ajusta os links para ficarem em uma linha e ocuparem 100% da largura */
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-links-mobile {
+    display: block;
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin-left: auto; /* Alinha os links à direita */
+  }
+
+  .nav-links-mobile li .links {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .logout {
+    margin-top: 20px; /* Separa o botão "Sair" dos outros links */
+  }
+}
+
+/* Responsividade para telas muito pequenas (smartphones em modo retrato) */
+@media (max-width: 480px) {
+  .logo img {
+    width: 100px; /* Logo ainda menor em telas muito pequenas */
+  }
+
+  .nav-links li .links {
+    font-size: 16px; /* Reduz o tamanho da fonte para caber melhor em telas pequenas */
+  }
+
+  .logout {
+    font-size: 14px; /* Ajusta o tamanho da fonte do botão de logout para telas muito pequenas */
+  }
+}

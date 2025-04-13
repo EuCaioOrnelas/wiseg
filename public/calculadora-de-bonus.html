@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora de Bônus do Seguro</title>
+    <link rel="stylesheet" href="./style/calculadora-de-bonus.css" />
+    <link rel="stylesheet" href="./style/navbar.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+      }
+      input,
+      button {
+        margin: 10px;
+        padding: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      // Verifica se o usuário está logado
+      if (sessionStorage.getItem("loggedIn") !== "true") {
+        window.location.href = "login.html"; // Redireciona para a página de login se não estiver logado
+      }
+
+      // Função para deslogar
+      function logout() {
+        sessionStorage.removeItem("loggedIn");
+        window.location.href = "login.html"; // Redireciona para a página de login após logout
+      }
+    </script>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar-container">
+        <!-- Logo -->
+        <div class="logo">
+          <a href="/home.html"><img src="./img/logowhite.png" alt="Logo" /></a>
+        </div>
+
+        <!-- Links Rápidos -->
+        <ul class="nav-links">
+          <li><a class="links" href="/home.html">Home</a></li>
+          <li>
+            <a class="links" href="/calculadora-de-bonus.html"
+              >Calculadora de Bônus</a
+            >
+          </li>
+          <li>
+            <a class="links" href="/consulta-placa.html">Consultar Placa</a>
+          </li>
+          <li><a class="logout" onclick="logout()">Sair</a></li>
+        </ul>
+
+        <!-- Links Rápidos Mobile -->
+        <ul class="nav-links-mobile">
+          <li><a class="links" href="/home.html">Home</a></li>
+          <li><a class="logout" onclick="logout()">Sair</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="content">
+      <div class="content_section">
+        <h2>Calculadora de Bônus Auto</h2>
+        <div class="box-info">
+          <div class="section-info">
+            <div class="bonus">
+              <label for="bonusAtual">Classe de Bônus Atual:</label>
+              <input
+                type="number"
+                id="bonusAtual"
+                min="0"
+                max="10"
+                value="0"
+              /><br />
+            </div>
+
+            <div class="date-1">
+              <label for="dataVencimento">Vencimento do Seguro:</label>
+              <input type="date" id="dataVencimento" />
+            </div>
+
+            <div class="date-2">
+              <label for="dataAtual">Data Atual:</label>
+              <input type="date" id="dataAtual" /><br />
+            </div>
+            <div class="descricao">
+              <p>
+                OBS: Caso a apólice tiver sinistro, será necessario reduzir 1
+                classe de Bônus para cada sinistro no resultado final.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="button">
+          <button onclick="calcularBonus()">Calcular</button>
+        </div>
+
+        <div class="resultado">
+          <h3>Resultado:</h3>
+          <p id="resultado"></p>
+        </div>
+
+        <!-- Tabela de Regras -->
+        <h3>Regra de Bônus (Apólice sem Sinistro):</h3>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Prazo da Renovação Contado do Vencimento da Apólice</th>
+                <th>Apólice Anterior com Vigência Maior ou Igual a 335 Dias</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Até 30 dias</td>
+                <td>Conceder 01 classe de bônus</td>
+              </tr>
+              <tr>
+                <td>Entre 31 até 60 dias</td>
+                <td>Manter a classe de bônus</td>
+              </tr>
+              <tr>
+                <td>Entre 61 até 90 dias</td>
+                <td>Reduzir 01 classe de bônus</td>
+              </tr>
+              <tr>
+                <td>Entre 91 até 120 dias</td>
+                <td>Reduzir 02 classes de bônus</td>
+              </tr>
+              <tr>
+                <td>Entre 121 até 150 dias</td>
+                <td>Reduzir 03 classes de bônus</td>
+              </tr>
+              <tr>
+                <td>Entre 151 até 180 dias</td>
+                <td>Reduzir 04 classes de bônus</td>
+              </tr>
+              <tr>
+                <td>Entre 181 até 210 dias</td>
+                <td>Reduzir 05 classes de bônus</td>
+              </tr>
+              <tr>
+                <td>Entre 211 até 240 dias</td>
+                <td>Reduzir 06 classes de bônus</td>
+              </tr>
+              <tr>
+                <td>Entre 241 até 270 dias</td>
+                <td>Reduzir 07 classes de bônus</td>
+              </tr>
+              <tr>
+                <td>Entre 271 até 300 dias</td>
+                <td>Reduzir 08 classes de bônus</td>
+              </tr>
+              <tr>
+                <td>Entre 301 até 330 dias</td>
+                <td>Reduzir 09 classes de bônus</td>
+              </tr>
+              <tr>
+                <td>Acima de 330 dias</td>
+                <td>Reduzir 10 classes de bônus</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      function calcularBonus() {
+        let vencimento = new Date(
+          document.getElementById("dataVencimento").value
+        );
+        let atual = new Date(document.getElementById("dataAtual").value);
+        let bonusAtual = parseInt(document.getElementById("bonusAtual").value);
+
+        if (isNaN(vencimento) || isNaN(atual) || isNaN(bonusAtual)) {
+          document.getElementById("resultado").innerText =
+            "Por favor, preencha todos os campos corretamente.";
+          return;
+        }
+
+        let diferencaDias = Math.floor(
+          (atual - vencimento) / (1000 * 60 * 60 * 24)
+        );
+        let alteracaoBonus = 0;
+
+        if (diferencaDias <= 30) {
+          alteracaoBonus = 1; // Ganha 1 classe de bônus
+        } else if (diferencaDias <= 60) {
+          alteracaoBonus = 0; // Mantém a classe
+        } else if (diferencaDias <= 90) {
+          alteracaoBonus = -1;
+        } else if (diferencaDias <= 120) {
+          alteracaoBonus = -2;
+        } else if (diferencaDias <= 150) {
+          alteracaoBonus = -3;
+        } else if (diferencaDias <= 180) {
+          alteracaoBonus = -4;
+        } else if (diferencaDias <= 210) {
+          alteracaoBonus = -5;
+        } else if (diferencaDias <= 240) {
+          alteracaoBonus = -6;
+        } else if (diferencaDias <= 270) {
+          alteracaoBonus = -7;
+        } else if (diferencaDias <= 300) {
+          alteracaoBonus = -8;
+        } else if (diferencaDias <= 330) {
+          alteracaoBonus = -9;
+        } else {
+          alteracaoBonus = -10;
+        }
+
+        // Calcula o novo bônus, garantindo que esteja entre 0 e 10
+        let novoBonus = Math.max(0, Math.min(10, bonusAtual + alteracaoBonus));
+
+        document.getElementById(
+          "resultado"
+        ).innerHTML = `Dias decorridos: <strong>${diferencaDias}</strong><br>
+                 Situação: <strong>${
+                   alteracaoBonus > 0 ? "Ganhou" : "Perdeu"
+                 } ${Math.abs(alteracaoBonus)} classe(s) de bônus</strong><br>
+                 Nova classe de bônus: <strong>${novoBonus}</strong>`;
+      }
+    </script>
+  </body>
+</html>

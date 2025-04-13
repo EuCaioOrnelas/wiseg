@@ -1,0 +1,57 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f9;
+  margin: 0;
+}
+.login-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  text-align: center;
+}
+img {
+  width: 200px;
+  height: auto;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+button {
+  width: 200px;
+  background-color: #11a65f;
+  color: white;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #218838;
+}
+.error {
+  color: red;
+  margin-top: 10px;
+}
+.create-account {
+  margin-top: 10px;
+  font-size: 14px;
+}
+.create-account a {
+  text-decoration: none;
+  color: #007bff;
+}
+.create-account a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Wiisec</title>
+    <link rel="stylesheet" href="./style/login.css" />
+  </head>
+  <body>
+    <div class="login-container">
+      <img src="./img/logo.png" alt="Logo" />
+      <input type="text" id="username" placeholder="Usuário" />
+      <input type="password" id="password" placeholder="Senha" />
+      <button onclick="login()">Entrar</button>
+
+      <div class="create-account">
+        <p><a href="#" id="create-account-link">Criar conta na WiSec</a></p>
+      </div>
+
+      <div id="error" class="error"></div>
+    </div>
+
+    <script>
+      const username = "Wiseguros";
+      const password = "Wiseg1357&";
+
+      function login() {
+        const inputUsername = document.getElementById("username").value;
+        const inputPassword = document.getElementById("password").value;
+        const errorMessage = document.getElementById("error");
+
+        if (inputUsername === username && inputPassword === password) {
+          sessionStorage.setItem("loggedIn", "true");
+          window.location.href = "home.html"; // Redireciona para a página principal após login
+        } else {
+          errorMessage.textContent = "Usuário ou senha incorretos!";
+        }
+      }
+
+      // Exemplo de link de criar conta Wiisec (editar depois)
+      document
+        .getElementById("create-account-link")
+        .addEventListener("click", function () {
+          alert("Página de criação de conta ainda não configurada!");
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página Principal</title>
+    <link rel="stylesheet" href="./style/navbar.css" />
+    <link rel="stylesheet" href="./style/home.css" />
+  </head>
+  <body>
+    <script>
+      // Verifica se o usuário está logado
+      if (sessionStorage.getItem("loggedIn") !== "true") {
+        window.location.href = "login.html"; // Redireciona para a página de login se não estiver logado
+      }
+
+      // Função para deslogar
+      function logout() {
+        sessionStorage.removeItem("loggedIn");
+        window.location.href = "login.html"; // Redireciona para a página de login após logout
+      }
+    </script>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar-container">
+        <!-- Logo -->
+        <div class="logo">
+          <a href="/home.html"><img src="./img/logowhite.png" alt="Logo" /></a>
+        </div>
+
+        <!-- Links Rápidos -->
+        <ul class="nav-links">
+          <li><a class="links" href="/home.html">Home</a></li>
+          <li>
+            <a class="links" href="/calculadora-de-bonus.html"
+              >Calculadora de Bônus</a
+            >
+          </li>
+          <li>
+            <a class="links" href="/consulta-placa.html">Consultar Placa</a>
+          </li>
+          <li><a class="logout" onclick="logout()">Sair</a></li>
+          <!-- Adicione mais links conforme necessário -->
+        </ul>
+
+        <!-- Links Rápidos Mobile -->
+        <ul class="nav-links-mobile">
+            <li><a class="links" href="/home.html">Home</a></li>
+            <li><a class="logout" onclick="logout()">Sair</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- Conteúdo principal -->
+    <div class="content">
+      <div class="content_section">
+        <div class="boas_vindas">
+          <h2>Bem-vindo à WiSeg!</h2>
+          <p>Você está logado e pode acessar o conteúdo protegido.</p>
+        </div>
+
+        <div class="cards">
+            <div class="card_section">
+                <div class="card">
+                    <a href="/calculadora-de-bonus.html"><img src="./img/calculadora-de-bonus.png" alt="Consultar Bônus"></a>
+                </div>
+                <div class="card">
+                    <a href="/consulta-placa.html"><img src="./img/consultar-placa.png" alt="Consultar Seguro pela Placa"></a>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
