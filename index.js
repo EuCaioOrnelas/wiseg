@@ -66,16 +66,17 @@ async function consult(placa, cia) {
 }
 
 // Rota de consulta
-app.get("/consultar-seguro", async (req, res) => {
-  const { placa } = req.query;
+app.get("/api/consultar-seguro", async (req, res) => {
+  const { placa } = req.query; // Lê o parâmetro 'placa' da URL da requisição
 
+  // Verifica se o parâmetro 'placa' foi fornecido
   if (!placa) {
-    return res.status(400).json({ error: "Placa é necessária" });
+    return res.status(400).json({ error: "Placa é necessária" }); // Retorna erro 400 se 'placa' não for fornecido
   }
 
   const result = [];
   for (const cia of cias) {
-    const response = await consult(placa, cia);
+    const response = await consult(placa, cia); // Chama a função consult
     if (response.data) {
       result.push({
         seguradora: response.cia,
@@ -87,11 +88,11 @@ app.get("/consultar-seguro", async (req, res) => {
     }
   }
 
+  // Se algum resultado for encontrado, retorna a resposta
   if (result.length > 0) {
-    // Se encontrar algum resultado, retorna os dados
     res.json(result);
   } else {
-    // Se não encontrar, retorna erro 404
+    // Caso contrário, retorna erro 404
     res.status(404).json({ error: "Seguro não encontrado" });
   }
 });

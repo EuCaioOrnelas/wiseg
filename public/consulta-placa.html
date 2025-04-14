@@ -74,7 +74,10 @@
   }
 
   // URL do backend, com a placa sendo passada corretamente
-  const url = `https://wiseg-oficial.vercel.app/api/consultar-seguro?placa=${placa}`;
+  console.log("Placa enviada:", placa);
+const url = `https://wiseg-oficial.vercel.app/api/consultar-seguro?placa=${placa}`;
+
+
 
   try {
     const response = await fetch(url);
