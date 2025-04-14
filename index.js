@@ -46,6 +46,7 @@ async function consult(placa, cia) {
 
     // Verifica se a apólice não foi encontrada
     if (data.ApoliceNaoEncontrada) {
+      console.log(`Apólice não encontrada para a seguradora ${cia.cia}`);
       return { cia, error: "not-found" };
     }
 
@@ -59,9 +60,9 @@ async function consult(placa, cia) {
       },
     };
   } catch (error) {
-    // Se ocorrer um erro ao consultar a API, loga o erro
+    // Log detalhado para erros da API externa
     console.error("Erro ao consultar a API:", error);
-    return { cia, error: "error" };
+    return { cia, error: "error", message: error.message };
   }
 }
 
@@ -71,9 +72,10 @@ app.get("/api/consultar-seguro", async (req, res) => {
 
   // Verifica se o parâmetro 'placa' foi fornecido
   if (!placa) {
-    return res.status(400).json({ error: "Placa é necessária" }); // Retorna erro 400 se 'placa' não for fornecido
+    return res.status(400).json({ message: "Placa é necessária" }); // Retorna erro 400 se 'placa' não for fornecido
   }
 
+  // Removendo a verificação para o CPF, já que ele não é mais necessário
   const result = [];
   for (const cia of cias) {
     const response = await consult(placa, cia); // Chama a função consult
@@ -92,8 +94,8 @@ app.get("/api/consultar-seguro", async (req, res) => {
   if (result.length > 0) {
     res.json(result);
   } else {
-    // Caso contrário, retorna erro 404
-    res.status(404).json({ error: "Seguro não encontrado" });
+    // Caso contrário, retorna erro 404 com mais detalhes
+    res.status(404).json({ message: "Seguro não encontrado" });
   }
 });
 
