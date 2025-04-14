@@ -75,7 +75,7 @@
         }
 
         // URL do backend local (substitua se estiver em outro servidor)
-        const url = `http://localhost:8080/consultar-seguro?placa=${placa}`;
+        const url = `/api/consultar-seguro?placa=${placa}`;
 
         try {
           const response = await fetch(url);
