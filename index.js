@@ -32,20 +32,24 @@ const cias = [
   { cia: "Zurich", slug: "ZURICH" },
 ];
 
-// Função de consulta
+// Função de consulta à API externa
 async function consult(placa, cia) {
-  const date = moment().subtract(1, "days").format();
+  const date = moment().subtract(1, "days").format(); // Data do sinistro
   try {
+    // Requisição à API externa para consultar a apólice de seguro
     const { data } = await axios.get(
       `https://oag.autoglass.com.br/atendimentos/api/web-app/apolices?Placa=${placa}&Seguradora=${cia.slug}&DataSinistro=${date}`
     );
 
-    // Adicionar log para verificar a resposta
+    // Log para depuração, verifica o que está retornando da API externa
     console.log("Resposta da API para a seguradora", cia.cia, ":", data);
 
-    if (data.ApoliceNaoEncontrada) return { cia, error: "not-found" };
+    // Verifica se a apólice não foi encontrada
+    if (data.ApoliceNaoEncontrada) {
+      return { cia, error: "not-found" };
+    }
 
-    // Verificando a resposta e extraindo os dados corretamente
+    // Se a apólice foi encontrada, retorna as informações relevantes
     return {
       cia: cia.cia,
       data: {
@@ -55,6 +59,7 @@ async function consult(placa, cia) {
       },
     };
   } catch (error) {
+    // Se ocorrer um erro ao consultar a API, loga o erro
     console.error("Erro ao consultar a API:", error);
     return { cia, error: "error" };
   }
@@ -78,13 +83,15 @@ app.get("/consultar-seguro", async (req, res) => {
         placa: response.data.placa,
         chassi: response.data.chassi,
       });
-      break;
+      break; // Se encontrar uma apólice, interrompe a busca nas seguradoras
     }
   }
 
   if (result.length > 0) {
+    // Se encontrar algum resultado, retorna os dados
     res.json(result);
   } else {
+    // Se não encontrar, retorna erro 404
     res.status(404).json({ error: "Seguro não encontrado" });
   }
 });

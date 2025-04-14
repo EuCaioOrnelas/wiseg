@@ -65,60 +65,48 @@
 
     <script>
       async function consultarSeguro() {
-        const placa = document.getElementById("placa").value;
+  const placa = document.getElementById("placa").value;
 
-        // Verifica se a placa está preenchida
-        if (!placa) {
-          document.getElementById("error").textContent =
-            "Preencha o campo de placa!";
-          return;
-        }
+  // Verifica se a placa está preenchida
+  if (!placa) {
+    document.getElementById("error").textContent = "Preencha o campo de placa!";
+    return;
+  }
 
-        // URL do backend local (substitua se estiver em outro servidor)
-        const url = `/api/consultar-seguro?placa=${placa}`;
+  // URL do backend, com a placa sendo passada corretamente
+  const url = `https://wiseg-oficial.vercel.app/api/consultar-seguro?placa=${placa}`;
 
-        try {
-          const response = await fetch(url);
-          const data = await response.json();
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
 
-          if (response.ok) {
-            let resultadoHTML = `<h3>Resultado:</h3>`;
+    if (response.ok) {
+      let resultadoHTML = `<h3>Resultado:</h3>`;
 
-            // Exibe os dados de forma mais bonita e organizada
-            data.forEach((item) => {
-              resultadoHTML += `
-                <div class="info">
-                  <strong>Seguradora:</strong> ${
-                    item.seguradora || "Não encontrada"
-                  }<br />
-                  <strong>Modelo do Carro:</strong> ${
-                    item.modelo || "Não encontrado"
-                  }<br />
-                  <strong>Placa:</strong> ${
-                    item.placa || "Não encontrada"
-                  }<br />
-                  <strong>Chassi:</strong> ${
-                    item.chassi || "Não encontrado"
-                  }<br />
-                  
-                </div>
-                <hr />
-              `;
-            });
+      // Exibe os dados de forma mais bonita e organizada
+      data.forEach((item) => {
+        resultadoHTML += `
+          <div class="info">
+            <strong>Seguradora:</strong> ${item.seguradora || "Não encontrada"}<br />
+            <strong>Modelo do Carro:</strong> ${item.modelo || "Não encontrado"}<br />
+            <strong>Placa:</strong> ${item.placa || "Não encontrada"}<br />
+            <strong>Chassi:</strong> ${item.chassi || "Não encontrado"}<br />
+          </div>
+          <hr />
+        `;
+      });
 
-            document.getElementById("resultado").innerHTML = resultadoHTML;
-            document.getElementById("error").textContent = "";
-          } else {
-            document.getElementById("resultado").innerHTML = "";
-            document.getElementById("error").textContent =
-              "Esse carro não tem seguro...";
-          }
-        } catch (error) {
-          document.getElementById("resultado").innerHTML = "";
-          document.getElementById("error").textContent =
-            "Erro ao conectar com a API.";
-        }
-      }
+      document.getElementById("resultado").innerHTML = resultadoHTML;
+      document.getElementById("error").textContent = "";
+    } else {
+      document.getElementById("resultado").innerHTML = "";
+      document.getElementById("error").textContent = "Esse carro não tem seguro...";
+    }
+  } catch (error) {
+    document.getElementById("resultado").innerHTML = "";
+    document.getElementById("error").textContent = "Erro ao conectar com a API.";
+  }
+}
     </script>
   </body>
 </html>
